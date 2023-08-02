@@ -242,7 +242,7 @@ datagen() {
 		)
 	fi
 	prefixed_array=$(add_prefix_params ${params[@]})
-	mpirun -np $parallel python3 dlio_benchmark/src/dlio_benchmark.py --config-path=$CONFIG_PATH workload=$workload ++workload.workflow.generate_data=True ++workload.workflow.train=False ${prefixed_array[@]} ${EXTRA_PARAMS[@]}
+	mpirun -np $parallel python3 dlio_benchmark/dlio_benchmark/main.py --config-path=$CONFIG_PATH workload=$workload ++workload.workflow.generate_data=True ++workload.workflow.train=False ${prefixed_array[@]} ${EXTRA_PARAMS[@]}
 }
 
 run() {
@@ -264,7 +264,7 @@ run() {
 		)
 	fi
 	prefixed_array=$(add_prefix_params ${params[@]})
-	mpirun -np $num_accelerators python3 dlio_benchmark/src/dlio_benchmark.py --config-path=$CONFIG_PATH workload=$workload ++workload.workflow.generate_data=False ++workload.workflow.train=True ${prefixed_array[@]} ${EXTRA_PARAMS[@]}
+	mpirun -np $num_accelerators python3 dlio_benchmark/dlio_benchmark/main.py --config-path=$CONFIG_PATH workload=$workload ++workload.workflow.generate_data=False ++workload.workflow.train=True ${prefixed_array[@]} ${EXTRA_PARAMS[@]}
 	#python report.py --result-dir $results_dir --config-path=$CONFIG_PATH
 }
 
@@ -273,7 +273,7 @@ configview() {
 	local params=("$@")
 	validate_workload $workload
 	prefixed_array=$(add_prefix_params ${params[@]})
-	python3 dlio_benchmark/src/dlio_benchmark.py --config-path=$CONFIG_PATH workload=$workload ${prefixed_array[@]} --cfg=job
+	python3 dlio_benchmark/dlio_benchmark/main.py --config-path=$CONFIG_PATH workload=$workload ${prefixed_array[@]} --cfg=job
 }
 
 postprocess() {
